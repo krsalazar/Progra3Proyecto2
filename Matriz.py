@@ -1,79 +1,79 @@
-class Vehicle:
-    def __init__(self, plate, color, line, model, owner):
-        self.plate = plate
+class Carro:
+    def __init__(self, placa, color, linea, modelo, propietario):
+        self.placa = placa
         self.color = color
-        self.line = line
-        self.model = model
-        self.owner = owner
+        self.linea = linea
+        self.modelo = modelo
+        self.propietario = propietario
 
-class Node:
-    def __init__(self, vehicle=None):
-        self.vehicle = vehicle
-        self.right = None
-        self.down = None
+class Nodo:
+    def __init__(self, vehiculo=None):
+        self.vehiculo = vehiculo
+        self.derecha = None
+        self.abajo = None
 
-class Matrix:
+class Matriz:
     def __init__(self):
-        self.head = Node()  # Nodo cabeza de la matriz
+        self.cabeza = Nodo()  # Nodo cabeza de la matriz
 
-    def insert(self, vehicle):
+    def insertar(self, vehicle):
         # Insertar un nuevo vehículo en la matriz
-        new_node = Node(vehicle)
+        nuevo_nodo = Nodo(vehicle)
 
         # Insertar en la fila (placa)
-        current = self.head
-        while current.down and current.down.vehicle.plate < vehicle.plate:
-            current = current.down
-        if current.down is None or current.down.vehicle.plate != vehicle.plate:
-            new_node.down = current.down
-            current.down = new_node
+        actual = self.cabeza
+        while actual.abajo and actual.abajo.vehiculo.placa < vehicle.placa:
+            actual = actual.abajo
+        if actual.abajo is None or actual.abajo.vehiculo.placa != vehicle.placa:
+            nuevo_nodo.abajo = actual.abajo
+            actual.abajo = nuevo_nodo
 
         # Insertar en la columna (otras propiedades)
-        current = self.head
-        while current.right and current.right.vehicle.color < vehicle.color:
-            current = current.right
-        if current.right is None or current.right.vehicle.color != vehicle.color:
-            new_node.right = current.right
-            current.right = new_node
+        actual = self.cabeza
+        while actual.derecha and actual.derecha.vehiculo.color < vehicle.color:
+            actual = actual.derecha
+        if actual.derecha is None or actual.derecha.vehiculo.color != vehicle.color:
+            nuevo_nodo.derecha = actual.derecha
+            actual.derecha = nuevo_nodo
 
-    def search(self, **kwargs):
+    def buscar(self, **kwargs):
         # Buscar vehículos según propiedades específicas
-        current = self.head
-        while current:
-            if current.vehicle:
+        actual = self.cabeza
+        while actual:
+            if actual.vehiculo:
                 match = True
-                for key, value in kwargs.items():
-                    if getattr(current.vehicle, key) != value:
+                for key, valor in kwargs.items():
+                    if getattr(actual.vehiculo, key) != valor:
                         match = False
                         break
                 if match:
-                    return current.vehicle
-            current = current.down
+                    return actual.vehiculo
+            actual = actual.abajo
         return None
 
-    def delete(self, **kwargs):
+    def borrar(self, **kwargs):
         # Eliminar vehículos según propiedades específicas
-        current = self.head
-        while current and current.down:
-            if current.down.vehicle:
+        actual = self.cabeza
+        while actual and actual.abajo:
+            if actual.abajo.vehiculo:
                 match = True
                 for key, value in kwargs.items():
-                    if getattr(current.down.vehicle, key) != value:
+                    if getattr(actual.abajo.vehiculo, key) != value:
                         match = False
                         break
                 if match:
-                    current.down = current.down.down
-            current = current.down
+                    actual.abajo = actual.abajo.abajo
+            actual = actual.abajo
 
-    def print_matrix(self):
+    def imprime_matriz(self):
         # Imprimir la matriz (solo para visualización)
-        current_row = self.head.down
-        while current_row:
-            current_node = current_row
+        linea_actual = self.cabeza.abajo
+        while linea_actual:
+            current_node = linea_actual
             while current_node:
-                if current_node.vehicle:
-                    print(f"Plate: {current_node.vehicle.plate}, Color: {current_node.vehicle.color}, "
-                          f"Line: {current_node.vehicle.line}, Model: {current_node.vehicle.model}, "
-                          f"Owner: {current_node.vehicle.owner}")
-                current_node = current_node.right
-            current_row = current_row.down
+                if current_node.vehiculo:
+                    print(f"Placa: {current_node.vehiculo.placa}, Color: {current_node.vehiculo.color}, "
+                          f"Linea: {current_node.vehiculo.linea}, Modelo: {current_node.vehiculo.modelo}, "
+                          f"Propietario: {current_node.vehiculo.propietario}")
+                current_node = current_node.derecha
+            linea_actual = linea_actual.abajo

@@ -1,23 +1,24 @@
 from Matriz import *
-# Press the green button in the gutter to run the script.
+
 if __name__ == '__main__':
     # Crear una matriz
-    matrix = Matrix()
+    matriz = Matriz()
 
     # Insertar vehículos
-    matrix.insert(Vehicle("ABC123", "Red", "Sedan", "2023", "John Doe"))
-    matrix.insert(Vehicle("XYZ789", "Blue", "SUV", "2022", "Jane Smith"))
-    matrix.insert(Vehicle("DEF456", "Red", "Truck", "2024", "Alice Johnson"))
+    matriz.insertar(Carro("P007AMD", "Rojo", "Sedan", "2023", "Juan Perez"))
+    matriz.insertar(Carro("P199HYT", "Azul", "SUV", "2022", "Ana Juarez"))
+    matriz.insertar(Carro("P025KLJ", "Rojo", "Truck", "2024", "Alice Salazar"))
+    matriz.insertar(Carro("M215BJT", "Negro", "Moto", "2024", "Alice Salazar"))
 
     # Buscar un vehículo por múltiples propiedades
-    result = matrix.search(color="Red", model="Sedan")
+    result = matriz.buscar(color="Rojo", modelo="Sedan")
     if result:
-        print("Vehicle found:", result.plate, result.color, result.model)
+        print("Vehicle found:", result.placa, result.color, result.modelo)
 
     # Eliminar un vehículo por múltiples propiedades
-    matrix.delete(color="Red", model="Truck")
+    matriz.borrar(color="Rojo", modelo="Truck")
 
     # Imprimir la matriz
-    matrix.print_matrix()
+    matriz.imprime_matriz()
 
-
+#Aun tenemos que hacer dinamica la parte de las opciones de la matriz
